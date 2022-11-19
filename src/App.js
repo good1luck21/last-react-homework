@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Header from "./components/Header";
+import Posts from "./components/Posts";
+import PostsNew from "./components/PostsNew";
+import Post from "./components/Post";
+import { useContext } from "react";
+import { PostsContext } from "./components/PostsContext";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
+  const { posts } = useContext(PostsContext);
+  console.log(posts.length);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={posts.length > 5 ? "App image" : "App"}>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Posts />} />
+        <Route path="/posts" element={<Posts />} />
+        <Route path="posts/new" element={<PostsNew />} />
+        <Route path="/posts/:id" element={<Post />} />
+        <Route path="*" element={<div>Not Found</div>} />
+      </Routes>
     </div>
   );
 }
